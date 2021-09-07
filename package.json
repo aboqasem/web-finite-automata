@@ -1,0 +1,25 @@
+{
+  "name": "vite-project",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "prepreview": "npm run build",
+    "preview": "vite preview",
+    "noserver-build": "npm run build -- --config vite.config.noserver.ts",
+    "prenoserver-preview": "npm run noserver-build",
+    "noserver-preview": "open ./dist/index.html"
+  },
+  "devDependencies": {
+    "@aboqasem/prettierrc": "^2.0.0",
+    "autoprefixer": "^10.3.4",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.10",
+    "typescript": "^4.3.2",
+    "vite": "^2.5.2",
+    "vite-plugin-singlefile": "^0.5.1"
+  },
+  "dependencies": {
+    "uhtml": "^2.7.6"
+  }
+}
