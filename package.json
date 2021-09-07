@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "web-finite-automata",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -20,6 +20,7 @@
     "vite-plugin-singlefile": "^0.5.1"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "uhtml": "^2.7.6"
   }
 }
