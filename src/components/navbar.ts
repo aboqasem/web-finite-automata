@@ -1,7 +1,7 @@
 import { html } from 'uhtml';
 import { element } from '../lib/utils';
-import { store } from '../store';
-import { pages, pagesActions } from '../store/pages/pagesSlice';
+import { dispatch, getState } from '../store';
+import { PAGES, pagesActions } from '../store/pages/pagesSlice';
 
 const styles = {
   menuItem: {
@@ -17,7 +17,7 @@ const styles = {
 };
 
 export const Navbar = () => {
-  const { currentPage } = store.getState().pages;
+  const { currentPage } = getState().pages;
 
   const toggleMobileMenu = () => {
     const menu = element('mobile-menu');
@@ -32,7 +32,7 @@ export const Navbar = () => {
   };
 
   const menuItemsOf = (platform: 'desktop' | 'mobile') => {
-    return pages.map((page) => {
+    return PAGES.map((page) => {
       const isCurrent = page === currentPage;
       const type = isCurrent ? 'current' : 'normal';
 
@@ -40,7 +40,7 @@ export const Navbar = () => {
         disabled=${isCurrent ? true : undefined}
         class="${'cursor-pointer rounded-md px-3 py-2 font-medium ' +
         styles.menuItem[platform][type]}"
-        onclick=${() => store.dispatch(pagesActions.to(page))}
+        onclick=${() => dispatch(pagesActions.to(page))}
         aria-current="${isCurrent ? 'page' : undefined}"
       >
         ${page}

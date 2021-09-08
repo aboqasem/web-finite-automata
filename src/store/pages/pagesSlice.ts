@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const pages = ['Home', 'Finite Automata', 'Help'] as const;
-export type Page = typeof pages[number];
+export const PAGES = ['Home', 'Finite Automata', 'Help'] as const;
+export type Page = typeof PAGES[number];
 
 interface PagesState {
-  currentPage: typeof pages[number];
+  currentPage: typeof PAGES[number];
 }
 
 const initialState: PagesState = {
-  currentPage: pages[0],
+  currentPage: PAGES[0],
 };
 
 export const pagesSlice = createSlice({

@@ -1,10 +1,10 @@
 import { FiniteAutomata } from '../pages/finite-automata';
 import { Help } from '../pages/help';
 import { Home } from '../pages/home';
-import { store } from '../store';
+import { getState } from '../store';
 
 export const CurrentPage = () => {
-  const { currentPage } = store.getState().pages;
+  const { currentPage } = getState().pages;
 
   if (currentPage === 'Home') {
     return Home();
