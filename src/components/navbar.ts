@@ -40,7 +40,14 @@ export const Navbar = () => {
         disabled=${isCurrent ? true : undefined}
         class="${'cursor-pointer rounded-md px-3 py-2 font-medium ' +
         styles.menuItem[platform][type]}"
-        onclick=${() => dispatch(pagesActions.to(page))}
+        onclick=${() => {
+          if (!isCurrent) {
+            dispatch(pagesActions.to(page));
+          }
+          if (platform === 'mobile') {
+            toggleMobileMenu();
+          }
+        }}
         aria-current="${isCurrent ? 'page' : undefined}"
       >
         ${page}
@@ -50,7 +57,11 @@ export const Navbar = () => {
 
   return html`<nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 lg:py-10">
+      <div
+        class=${`flex items-center justify-between md:justify-center h-16 ${
+          currentPage === 'Finite Automata' ? 'md:pl-52' : ''
+        } lg:py-10`}
+      >
         <div class="flex items-center">
           <!-- Desktop -->
           <div class="flex items-center">
