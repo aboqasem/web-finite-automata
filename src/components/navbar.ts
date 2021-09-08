@@ -20,9 +20,9 @@ export const Navbar = () => {
   const { currentPage } = store.getState().pages;
 
   const toggleMobileMenu = () => {
-    const menu = element<HTMLDivElement>('mobile-menu');
-    const menuOpenedIcon = element<HTMLDivElement>('menu-opened-icon');
-    const menuClosedIcon = element<HTMLDivElement>('menu-closed-icon');
+    const menu = element('mobile-menu');
+    const menuOpenedIcon = element('menu-opened-icon');
+    const menuClosedIcon = element('menu-closed-icon');
 
     menu?.classList.toggle('hidden');
     menuOpenedIcon?.classList.toggle('block');
@@ -49,9 +49,9 @@ export const Navbar = () => {
   };
 
   return html`<nav class="bg-gray-800">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div class="border-b border-gray-700">
-        <div class="flex items-center justify-between h-16 px-4 lg:py-10 sm:px-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:py-10">
+        <div class="flex items-center">
           <!-- Desktop -->
           <div class="flex items-center">
             <div class="hidden md:block">
@@ -109,8 +109,8 @@ export const Navbar = () => {
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="border-b border-gray-700 hidden md:hidden" id="mobile-menu">
-      <div class="px-2 py-3 space-y-1 sm:px-3">${menuItemsOf('mobile')}</div>
+    <div class="border-gray-700 hidden md:hidden" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">${menuItemsOf('mobile')}</div>
     </div>
   </nav>`;
 };
