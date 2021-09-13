@@ -1,9 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
-import { HiChevronDown, HiMenu, HiX } from 'react-icons/hi';
+import { HiMenu, HiX } from 'react-icons/hi';
 import FaIcon from '../assets/svgs/FaIcon';
 import { useToggle } from '../lib/hooks/use-toggle';
 import { FaMode, FA_MODES, Page, PAGES } from '../lib/types/common';
+import DropdownList from './DropdownList';
 
 export interface AppShellProps {
   children: (props: { currentPage: Page; currentFaMode: FaMode }) => React.ReactNode;
@@ -40,27 +41,14 @@ export default function AppShell({ children }: AppShellProps) {
         </div>
         {/* Picker area */}
         {isFa && (
-          <div className="mx-auto md:hidden">
-            <div className="relative">
-              <label htmlFor="finite-automata-select" className="sr-only">
-                Choose finite automata mode
-              </label>
-              <select
-                id="finite-automata-select"
-                className="pl-3 pr-8 text-base font-medium text-gray-900 border-0 rounded-md bg-none focus:ring-2 focus:ring-indigo-600"
-                value={currentFaMode}
-                onChange={(e) => setCurrentFaMode(e.target.value as FaMode)}
-              >
-                {FA_MODES.map((mode) => (
-                  <option key={mode} value={mode}>
-                    {mode}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center justify-center pr-2 pointer-events-none">
-                <HiChevronDown className="w-5 h-5 text-gray-500" aria-hidden="true" />
-              </div>
-            </div>
+          <div className="w-32 mx-auto md:hidden">
+            <DropdownList
+              label="Choose finite automata mode"
+              selections={FA_MODES}
+              selection={currentFaMode}
+              onSelectionChange={setCurrentFaMode}
+              srOnlyLabel={true}
+            />
           </div>
         )}
 
