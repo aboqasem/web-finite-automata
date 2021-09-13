@@ -13,6 +13,10 @@
         <feMergeNode in="offset-extrude"></feMergeNode>
         <feMergeNode in="SourceGraphic"></feMergeNode>
       </feMerge>
+      <feDropShadow dx="-1" dy="-1" stdDeviation="0" floodColor="#000"></feDropShadow>
+      <feDropShadow dx="1" dy="-1" stdDeviation="0" floodColor="#000"></feDropShadow>
+      <feDropShadow dx="1" dy="1" stdDeviation="0" floodColor="#000"></feDropShadow>
+      <feDropShadow dx="-1" dy="1" stdDeviation="0" floodColor="#000"></feDropShadow>
     </filter>
   </defs>
   <g filter="url(#editing-extrusion)">

@@ -25,7 +25,7 @@ export default function AppShell({ children }: AppShellProps) {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-gray-100">
+    <div className="flex flex-col min-h-screen overflow-hidden bg-gray-100">
       {/* Top nav*/}
       <header className="relative flex items-center flex-shrink-0 h-16 bg-white">
         <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
@@ -33,7 +33,7 @@ export default function AppShell({ children }: AppShellProps) {
             className={`flex items-center justify-center w-16 h-16 md:p-4 cursor-pointer focus:outline-none md:w-28 ${
               isFa && 'md:bg-indigo-500'
             }`}
-            onClick={() => setCurrentPage('Home')}
+            onClick={() => currentPage !== 'Home' && setCurrentPage('Home')}
           >
             <FaIcon />
           </a>
