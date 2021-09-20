@@ -33,8 +33,8 @@ const people = [
 
 export default function HomePage() {
   return (
-    <div className="bg-white">
-      <div className="px-4 py-12 mx-auto text-center max-w-7xl sm:px-6 lg:px-8 lg:py-24">
+    <div className="mx-auto my-6 bg-white max-w-7xl sm:mx-6 lg:mx-8 lg:flex">
+      <div className="px-4 py-12 mx-auto text-center xl:mx-16 max-w-7xl sm:px-6 lg:px-8 lg:py-24">
         <div className="space-y-12">
           <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
             <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">

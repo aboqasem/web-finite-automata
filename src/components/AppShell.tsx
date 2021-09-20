@@ -148,7 +148,7 @@ export default function AppShell({ children }: AppShellProps) {
       </header>
 
       {/* Bottom section */}
-      <div className="flex flex-1 min-h-0 overflow-hidden">
+      <div className="flex flex-1 min-h-0 overflow-scroll">
         {/* Narrow sidebar*/}
         {isFa && (
           <nav
@@ -172,9 +172,7 @@ export default function AppShell({ children }: AppShellProps) {
         )}
 
         {/* Main area */}
-        <main className="flex-1 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:flex">
-          {children({ currentPage, currentFaMode })}
-        </main>
+        <main className="flex-1 mx-auto">{children({ currentPage, currentFaMode })}</main>
       </div>
     </div>
   );

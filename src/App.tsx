@@ -11,10 +11,10 @@ export default function App() {
         {({ currentPage, currentFaMode }) => (
           <section
             aria-labelledby="primary-heading"
-            className="flex flex-col flex-1 h-full min-w-0 overflow-hidden lg:order-last"
+            className="flex flex-col items-center flex-1 h-full min-w-0 overflow-hidden lg:order-last"
           >
             <h1 id="primary-heading" className="sr-only">
-              ${currentPage}
+              {currentPage}
             </h1>
             {currentPage === 'Home' && <HomePage />}
             {currentPage === 'Finite Automata' && <FiniteAutomataPage faMode={currentFaMode} />}
