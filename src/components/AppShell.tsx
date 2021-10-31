@@ -1,29 +1,36 @@
 import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 import FaIcon from '../assets/svgs/FaIcon';
 import { useToggle } from '../lib/hooks/use-toggle';
-import { FaMode, FA_MODES, Page, PAGES } from '../lib/types/common';
-import DropdownList from './DropdownList';
+import { Route, routesActions, topLevelRoutes, useAppDispatch, useAppSelector } from '../lib/store';
 
 export interface AppShellProps {
-  children: (props: { currentPage: Page; currentFaMode: FaMode }) => React.ReactNode;
+  children: React.ReactNode;
 }
 
 export default function AppShell({ children }: AppShellProps) {
-  const [currentPage, setCurrentPage] = useState<Page>('Home');
+  const currentRoute = useAppSelector((state) => state.routes.route);
+  const dispatch = useAppDispatch();
   const [isMobileMenuOpen, toggleIsMobileMenuOpen] = useToggle(false);
 
-  const isFa = currentPage === 'Finite Automata';
-  const [currentFaMode, setCurrentFaMode] = useState<FaMode>(FA_MODES[0]);
+  const setCurrentRoute = useCallback(
+    (route: Route) => {
+      if (currentRoute === route) {
+        return;
+      }
+      dispatch(routesActions.setRoute(route));
+    },
+    [currentRoute],
+  );
 
-  const navClickHandler = (page: Page) => () => {
-    if (currentPage === page) {
-      return;
-    }
-    setCurrentPage(page);
-    toggleIsMobileMenuOpen(false);
-  };
+  const navClickHandler = useCallback(
+    (route: Route) => () => {
+      setCurrentRoute(route);
+      toggleIsMobileMenuOpen(false);
+    },
+    [currentRoute],
+  );
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden bg-gray-100">
@@ -31,26 +38,14 @@ export default function AppShell({ children }: AppShellProps) {
       <header className="relative flex items-center flex-shrink-0 h-16 bg-white">
         <div className="absolute inset-y-0 left-0 md:static md:flex-shrink-0">
           <a
-            className={`flex items-center justify-center w-16 h-16 md:p-4 cursor-pointer focus:outline-none md:w-28 ${
-              isFa && 'md:bg-indigo-500'
-            }`}
-            onClick={() => currentPage !== 'Home' && setCurrentPage('Home')}
+            className={
+              'flex items-center justify-center w-16 h-16 md:p-4 cursor-pointer focus:outline-none md:w-28'
+            }
+            onClick={() => setCurrentRoute(Route.Home)}
           >
             <FaIcon />
           </a>
         </div>
-        {/* Picker area */}
-        {isFa && (
-          <div className="w-32 mx-auto md:hidden">
-            <DropdownList
-              label="Choose finite automata mode"
-              selections={FA_MODES}
-              selection={currentFaMode}
-              onSelectionChange={setCurrentFaMode}
-              srOnlyLabel={true}
-            />
-          </div>
-        )}
 
         {/* Menu button area */}
         <div className="absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-6 md:hidden">
@@ -69,15 +64,15 @@ export default function AppShell({ children }: AppShellProps) {
         <div className="hidden md:min-w-0 md:flex-1 md:flex md:items-center md:justify-end">
           <div className="flex items-center flex-shrink-0 pr-4 ml-10 space-x-10">
             <nav aria-label="Global" className="flex space-x-10">
-              {PAGES.map((page) => (
+              {topLevelRoutes.map(([name, route]) => (
                 <a
-                  key={page}
-                  onClick={navClickHandler(page)}
+                  key={route}
+                  onClick={navClickHandler(route)}
                   className={`text-sm font-medium text-gray-900 cursor-pointer ${
-                    currentPage === page ? 'text-indigo-600' : 'text-gray-900'
+                    currentRoute.startsWith(route) ? 'text-indigo-600' : 'text-gray-900'
                   }`}
                 >
-                  {page}
+                  {name}
                 </a>
               ))}
             </nav>
@@ -128,15 +123,15 @@ export default function AppShell({ children }: AppShellProps) {
                   </button>
                 </div>
                 <div className="px-2 py-3 mx-auto max-w-8xl sm:px-4">
-                  {PAGES.map((page) => (
-                    <Fragment key={page}>
+                  {topLevelRoutes.map(([name, route]) => (
+                    <Fragment key={route}>
                       <a
                         className={`block px-3 py-2 text-base font-medium rounded-md hover:bg-gray-100 cursor-pointer ${
-                          currentPage === page ? 'text-indigo-600' : 'text-gray-900'
+                          currentRoute.startsWith(route) ? 'text-indigo-600' : 'text-gray-900'
                         }`}
-                        onClick={navClickHandler(page)}
+                        onClick={navClickHandler(route)}
                       >
-                        {page}
+                        {name}
                       </a>
                     </Fragment>
                   ))}
@@ -148,31 +143,9 @@ export default function AppShell({ children }: AppShellProps) {
       </header>
 
       {/* Bottom section */}
-      <div className="flex flex-1 min-h-0 overflow-scroll">
-        {/* Narrow sidebar*/}
-        {isFa && (
-          <nav
-            aria-label="Sidebar"
-            className="hidden md:block md:flex-shrink-0 md:bg-gray-800 md:overflow-y-auto"
-          >
-            <div className="relative flex flex-col items-center p-3 space-y-3 w-28">
-              {FA_MODES.map((mode) => (
-                <a
-                  key={mode}
-                  onClick={() => setCurrentFaMode(mode)}
-                  className={`hover:bg-gray-700 flex-shrink-0 inline-flex items-center justify-center h-14 w-20 rounded-lg cursor-pointer ${
-                    mode === currentFaMode ? 'bg-gray-900 text-white' : 'text-gray-400'
-                  }`}
-                >
-                  <span>{mode}</span>
-                </a>
-              ))}
-            </div>
-          </nav>
-        )}
-
+      <div className="flex-1 min-h-0">
         {/* Main area */}
-        <main className="flex-1 mx-auto">{children({ currentPage, currentFaMode })}</main>
+        <main className="mx-auto">{children}</main>
       </div>
     </div>
   );
