@@ -15,10 +15,10 @@ export default function FaForm() {
   const statesInputRef = useRef<HTMLInputElement>(null);
 
   const [faFormData, setFaFormData] = useState<FaFormData>({
-    states: '',
-    alphabet: '',
-    initialState: '',
-    finalStates: '',
+    states: 'q1,q2,q3,q4,q5',
+    alphabet: '0,1,2,3,4',
+    initialState: 'q1',
+    finalStates: 'q5',
   });
   const [faDataErrors, setFaDataErrors] = useState<Partial<FaFormData>>({});
 

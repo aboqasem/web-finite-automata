@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TextField from '../../../components/forms/TextField';
 import { useAppSelector } from '../../../lib/store';
 
 export default function NfaSection() {
-  const validFaData = useAppSelector((state) => state.faData);
+  const validFaData = useAppSelector((state) => state.faData)!;
+
+  const [formTransitions, setFormTransitions] = useState(() =>
+    validFaData.states.reduce((transitions, state) => {
+      validFaData.alphabet.forEach((char) => {
+        transitions[`${state}:${char}`] = '';
+      });
+
+      return transitions;
+    }, {} as { [K in `${string}:${string}`]: string }),
+  );
+  const [_validFormTransitions, setValidFormTransitions] = useState(() => formTransitions);
 
   return (
     <div className="h-full">
@@ -46,14 +58,50 @@ export default function NfaSection() {
                             {state}
                           </th>
 
-                          {validFaData.alphabet.map((char) => (
-                            <td
-                              key={char}
-                              className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
-                            >
-                              {'Ø'}
-                            </td>
-                          ))}
+                          {validFaData.alphabet.map((char) => {
+                            const transition = formTransitions[`${state}:${char}`];
+
+                            return (
+                              <td
+                                key={char}
+                                className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap"
+                              >
+                                <div className="flex items-center justify-center">
+                                  <span className="pr-1 text-2xl font-extralight">
+                                    {transition.trim() ? '{' : ''}
+                                  </span>
+
+                                  <TextField
+                                    className="w-20 text-center invalid:text-red-900 invalid:placeholder-red-300 invalid:border-red-300 focus:invalid:ring-red-500 focus:invalid:border-red-500"
+                                    label=""
+                                    placeholder="Ø"
+                                    title="Unique comma separated state strings (e.g. q1,q2,q3)"
+                                    pattern={`^(?!,)(?:(?:^|,)((${validFaData.states.join(
+                                      '|',
+                                    )})+)(?!.*\\b\\1\\b))+$`}
+                                    onChange={(e) => {
+                                      setFormTransitions((transitions) => ({
+                                        ...transitions,
+                                        [`${state}:${char}`]: e.target.value,
+                                      }));
+
+                                      if (e.target.validity.valid) {
+                                        setValidFormTransitions((transitions) => ({
+                                          ...transitions,
+                                          [`${state}:${char}`]: e.target.value,
+                                        }));
+                                      }
+                                    }}
+                                    value={transition}
+                                  />
+
+                                  <span className="pl-1 text-2xl font-extralight">
+                                    {transition.trim() ? '}' : ''}
+                                  </span>
+                                </div>
+                              </td>
+                            );
+                          })}
                         </tr>
                       ))}
                     </tbody>

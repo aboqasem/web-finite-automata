@@ -28,6 +28,7 @@ export default function TextField({
   pattern,
   error,
   inputRef,
+  className,
   ...restProps
 }: TextFieldProps) {
   const isError = Boolean(error);
@@ -54,7 +55,7 @@ export default function TextField({
             isError
               ? 'text-red-900 placeholder-red-300 border-red-300 focus:ring-red-500 focus:border-red-500'
               : 'placeholder-gray-400 border-gray-300 focus:ring-blue-500 focus:border-blue-500'
-          }`}
+          } ${className}`}
           {...restProps}
         />
 
