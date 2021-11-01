@@ -38,6 +38,12 @@ export default function NfaForm() {
         acceptingStates: nfaFormData.acceptingStates.split(','),
       };
 
+      if (nfaData.states.some((state) => nfaData.alphabet.includes(state))) {
+        return setNfaDataErrors({
+          states: 'Must not overlap with alphabet',
+          alphabet: 'Must not overlap with states',
+        });
+      }
       if (!nfaData.states.includes(nfaData.initialState)) {
         return setNfaDataErrors({
           initialState: 'Must be one of the provided states',
@@ -50,7 +56,7 @@ export default function NfaForm() {
       }
 
       dispatch(enfaDataActions.setFaData(nfaData));
-      dispatch(routesActions.setRoute(Route.Nfa));
+      dispatch(routesActions.setRoute(Route['Ɛ-NFA']));
     },
     [nfaFormData],
   );

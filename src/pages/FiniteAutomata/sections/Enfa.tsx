@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import TextField from '../../../components/forms/TextField';
 import { enfaDataActions, useAppDispatch, useAppSelector } from '../../../lib/store';
 
-export default function NfaSection() {
+export default function EnfaSection() {
   const dispatch = useAppDispatch();
   const validEnfaData = useAppSelector((state) => state.enfaData)!;
 
@@ -61,7 +61,7 @@ export default function NfaSection() {
                         scope="col"
                         className="px-6 py-3 text-xs font-bold tracking-wider text-center text-gray-500"
                       >
-                        <sup>δ</sup>NFA
+                        <sup>δ</sup>Ɛ-NFA
                       </th>
 
                       {validEnfaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').map((char) => (

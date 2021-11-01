@@ -4,11 +4,11 @@ export enum Route {
   Home = '/home',
 
   'Finite Automata' = '/fa',
-  Nfa = '/fa/nfa',
-  Dfa = '/fa/dfa',
-  'Min Dfa' = '/fa/min-dfa',
+  'Ɛ-NFA' = '/fa/enfa',
+  DFA = '/fa/dfa',
+  'Min DFA' = '/fa/min-dfa',
   Test = '/fa/test',
-  Rg = '/fa/rg',
+  RG = '/fa/rg',
 
   Help = '/help',
 }

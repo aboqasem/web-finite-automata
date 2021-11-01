@@ -9,22 +9,21 @@ import {
 } from '../../../lib/store';
 import DfaSection from './Dfa';
 import MinDfaSection from './MinDfa';
-import NfaSection from './Nfa';
+import EnfaSection from './Enfa';
 import RgSection from './Rg';
 import TestSection from './Test';
 
 const sections = {
-  [Route.Nfa]: <NfaSection />,
-  [Route.Dfa]: <DfaSection />,
-  [Route['Min Dfa']]: <MinDfaSection />,
+  [Route['Ɛ-NFA']]: <EnfaSection />,
+  [Route.DFA]: <DfaSection />,
+  [Route['Min DFA']]: <MinDfaSection />,
   [Route.Test]: <TestSection />,
-  [Route.Rg]: <RgSection />,
+  [Route.RG]: <RgSection />,
 } as { [R in typeof faSectionsRoutes[number][1]]: ReactNode };
 
 export default function FaSections() {
   const dispatch = useAppDispatch();
   const currentRoute = useAppSelector((state) => state.routes.route);
-  const validEnfaData = useAppSelector((state) => state.enfaData);
 
   const onRouteChange = useCallback((r: Route) => dispatch(routesActions.setRoute(r)), []);
 
@@ -51,7 +50,7 @@ export default function FaSections() {
                   route === currentRoute
                     ? 'bg-indigo-100 text-indigo-700'
                     : 'text-gray-500 hover:text-gray-700'
-                } px-3 py-2 font-semibold text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none uppercase`}
+                } px-3 py-2 font-semibold text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none`}
                 aria-current={route === currentRoute ? 'page' : undefined}
               >
                 {name}
