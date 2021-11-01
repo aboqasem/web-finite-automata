@@ -5,6 +5,8 @@ import App from './App';
 import './index.css';
 import { store } from './lib/store';
 
+noam.fsm.epsilonSymbol = 'Ɛ';
+
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>

@@ -6,7 +6,7 @@ interface FaFormData {
   states: string;
   alphabet: string;
   initialState: string;
-  finalStates: string;
+  acceptingStates: string;
 }
 
 export default function FaForm() {
@@ -15,10 +15,10 @@ export default function FaForm() {
   const statesInputRef = useRef<HTMLInputElement>(null);
 
   const [faFormData, setFaFormData] = useState<FaFormData>({
-    states: 'q1,q2,q3,q4,q5',
-    alphabet: '0,1,2,3,4',
-    initialState: 'q1',
-    finalStates: 'q5',
+    states: '',
+    alphabet: '',
+    initialState: '',
+    acceptingStates: '',
   });
   const [faDataErrors, setFaDataErrors] = useState<Partial<FaFormData>>({});
 
@@ -33,9 +33,9 @@ export default function FaForm() {
 
       const faData = {
         states: faFormData.states.split(','),
-        alphabet: faFormData.alphabet.split(',').concat(/* Ɛ-transition */ 'Ɛ'),
+        alphabet: faFormData.alphabet.split(','),
         initialState: faFormData.initialState,
-        finalStates: faFormData.finalStates.split(','),
+        acceptingStates: faFormData.acceptingStates.split(','),
       };
 
       if (!faData.states.includes(faData.initialState)) {
@@ -43,9 +43,9 @@ export default function FaForm() {
           initialState: 'Must be one of the provided states',
         });
       }
-      if (!faData.finalStates.every((s) => faData.states.includes(s))) {
+      if (!faData.acceptingStates.every((s) => faData.states.includes(s))) {
         return setFaDataErrors({
-          finalStates: 'Each must be one of the provided states',
+          acceptingStates: 'Each must be one of the provided states',
         });
       }
 
@@ -104,14 +104,14 @@ export default function FaForm() {
           />
 
           <TextField
-            id="finalStates"
+            id="acceptingStates"
             label="Final States"
             title="Unique comma separated state strings (e.g. q1,q2,q3)"
-            value={faFormData.finalStates}
+            value={faFormData.acceptingStates}
             onChange={onTextFieldChange}
             required
             pattern="^(?!,)(?:(?:^|,)([A-Za-z0-9]+)(?!.*\b\1\b))+$"
-            error={faDataErrors.finalStates}
+            error={faDataErrors.acceptingStates}
           />
 
           <div>

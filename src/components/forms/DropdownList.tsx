@@ -29,7 +29,7 @@ export default function DropdownList<T>({
 
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              <span className="block truncate">
+              <span className="block uppercase truncate">
                 {selections.find(([_, v]) => v === value)?.[0]}
               </span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -51,7 +51,7 @@ export default function DropdownList<T>({
                     className={({ active }) =>
                       `${
                         active ? 'text-white bg-indigo-600' : 'text-gray-900'
-                      } cursor-default select-none relative py-2 pl-3 pr-9`
+                      } cursor-default select-none relative py-2 pl-3 pr-9 uppercase`
                     }
                     value={value}
                   >

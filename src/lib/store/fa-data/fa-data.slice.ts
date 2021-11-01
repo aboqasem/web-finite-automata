@@ -1,23 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface FaDataState {
-  states: string[];
-  alphabet: string[];
-  initialState: string;
-  finalStates: string[];
-  transitions?: { [k: string]: string };
-}
-
 export const faDataSlice = createSlice({
   name: 'faData',
-  initialState: null as null | FaDataState,
+  initialState: null as null | (Omit<Fsm, 'transitions'> & { transitions?: Fsm['transitions'] }),
   reducers: {
-    setFaData: (_, action: PayloadAction<FaDataState>) => {
+    setFaData: (_, action: PayloadAction<Omit<Fsm, 'transitions'>>) => {
       return {
         ...action.payload,
       };
     },
-    setTransitions: (state, action: PayloadAction<FaDataState['transitions']>) => {
+    setTransitions: (state, action: PayloadAction<Fsm['transitions']>) => {
       return (
         state && {
           ...state,
