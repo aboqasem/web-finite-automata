@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import TextField from '../../../components/forms/TextField';
-import { faDataActions, useAppDispatch, useAppSelector } from '../../../lib/store';
+import { enfaDataActions, useAppDispatch, useAppSelector } from '../../../lib/store';
 
 export default function NfaSection() {
   const dispatch = useAppDispatch();
-  const validFaData = useAppSelector((state) => state.faData)!;
+  const validEnfaData = useAppSelector((state) => state.enfaData)!;
 
   const [formTransitions, setFormTransitions] = useState(() =>
-    validFaData.states.reduce((transitions, state) => {
-      validFaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').forEach((char) => {
+    validEnfaData.states.reduce((transitions, state) => {
+      validEnfaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').forEach((char) => {
         transitions[`${state}:${char}`] =
-          validFaData.transitions
+          validEnfaData.transitions
             ?.find(({ fromState, symbol }) => fromState === state && symbol === char)
             ?.toStates.join(',') ?? '';
       });
@@ -36,9 +36,9 @@ export default function NfaSection() {
   useEffect(() => {
     try {
       dispatch(
-        faDataActions.setTransitions(
+        enfaDataActions.setTransitions(
           noam.fsm.parseFsmFromString(
-            noam.fsm.serializeFsmToString({ ...validFaData, transitions }),
+            noam.fsm.serializeFsmToString({ ...validEnfaData, transitions }),
           ).transitions,
         ),
       );
@@ -64,7 +64,7 @@ export default function NfaSection() {
                         <sup>δ</sup>NFA
                       </th>
 
-                      {validFaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').map((char) => (
+                      {validEnfaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').map((char) => (
                         <th
                           key={char}
                           scope="col"
@@ -77,18 +77,18 @@ export default function NfaSection() {
                   </thead>
 
                   <tbody className="bg-white divide-y">
-                    {validFaData.states.map((state) => (
+                    {validEnfaData.states.map((state) => (
                       <tr key={state} className="divide-x">
                         <th
                           scope="row"
                           className="px-6 py-4 text-sm font-medium text-gray-500 border-r bg-gray-50 whitespace-nowrap"
                         >
-                          {state === validFaData.initialState && '⇨ '}
-                          {validFaData.acceptingStates.includes(state) && '* '}
+                          {state === validEnfaData.initialState && '⇨ '}
+                          {validEnfaData.acceptingStates.includes(state) && '* '}
                           {state}
                         </th>
 
-                        {validFaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').map((char) => {
+                        {validEnfaData.alphabet.concat(/* Ɛ-transition */ 'Ɛ').map((char) => {
                           const transition = formTransitions[`${state}:${char}`];
 
                           return (
@@ -106,7 +106,7 @@ export default function NfaSection() {
                                   label=""
                                   placeholder="Ø"
                                   title="Unique comma separated state strings (e.g. q1,q2,q3)"
-                                  pattern={`^(?!,)(?:(?:^|,)((${validFaData.states.join(
+                                  pattern={`^(?!,)(?:(?:^|,)((${validEnfaData.states.join(
                                     '|',
                                   )})+)(?!.*\\b\\1\\b))+$`}
                                   onChange={(e) => {

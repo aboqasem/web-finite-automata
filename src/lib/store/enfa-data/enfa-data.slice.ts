@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export const faDataSlice = createSlice({
-  name: 'faData',
+export const enfaDataSlice = createSlice({
+  name: 'enfaData',
   initialState: null as null | (Omit<Fsm, 'transitions'> & { transitions?: Fsm['transitions'] }),
   reducers: {
     setFaData: (_, action: PayloadAction<Omit<Fsm, 'transitions'>>) => {
@@ -20,6 +20,6 @@ export const faDataSlice = createSlice({
   },
 });
 
-export const faDataActions = faDataSlice.actions;
+export const enfaDataActions = enfaDataSlice.actions;
 
-export const faDataReducer = faDataSlice.reducer;
+export const enfaDataReducer = enfaDataSlice.reducer;

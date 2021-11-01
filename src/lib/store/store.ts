@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { faDataReducer } from './fa-data/fa-data.slice';
+import { enfaDataReducer } from './enfa-data/enfa-data.slice';
 import { routesReducer } from './routes/routes.slice';
 
 export const store = configureStore({
   reducer: {
-    faData: faDataReducer,
+    enfaData: enfaDataReducer,
     routes: routesReducer,
   },
 });

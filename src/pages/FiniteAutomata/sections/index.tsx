@@ -21,17 +21,10 @@ const sections = {
   [Route.Rg]: <RgSection />,
 } as { [R in typeof faSectionsRoutes[number][1]]: ReactNode };
 
-const tabs = [
-  { name: 'My Account', href: '#', current: false },
-  { name: 'Company', href: '#', current: false },
-  { name: 'Team Members', href: '#', current: true },
-  { name: 'Billing', href: '#', current: false },
-];
-
-export default function FaSection() {
+export default function FaSections() {
   const dispatch = useAppDispatch();
   const currentRoute = useAppSelector((state) => state.routes.route);
-  const validFaData = useAppSelector((state) => state.faData);
+  const validEnfaData = useAppSelector((state) => state.enfaData);
 
   const onRouteChange = useCallback((r: Route) => dispatch(routesActions.setRoute(r)), []);
 
@@ -59,7 +52,6 @@ export default function FaSection() {
                     ? 'bg-indigo-100 text-indigo-700'
                     : 'text-gray-500 hover:text-gray-700'
                 } px-3 py-2 font-semibold text-sm rounded-md disabled:opacity-50 disabled:pointer-events-none uppercase`}
-                disabled={route !== currentRoute && !validFaData?.transitions}
                 aria-current={route === currentRoute ? 'page' : undefined}
               >
                 {name}

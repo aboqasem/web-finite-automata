@@ -1,58 +1,58 @@
 import React, { ChangeEventHandler, FormEventHandler, useCallback, useRef, useState } from 'react';
 import TextField from '../../../components/forms/TextField';
-import { faDataActions, Route, routesActions, useAppDispatch } from '../../../lib/store';
+import { enfaDataActions, Route, routesActions, useAppDispatch } from '../../../lib/store';
 
-interface FaFormData {
+interface NfaFormData {
   states: string;
   alphabet: string;
   initialState: string;
   acceptingStates: string;
 }
 
-export default function FaForm() {
+export default function NfaForm() {
   const dispatch = useAppDispatch();
 
   const statesInputRef = useRef<HTMLInputElement>(null);
 
-  const [faFormData, setFaFormData] = useState<FaFormData>({
+  const [nfaFormData, setNfaFormData] = useState<NfaFormData>({
     states: '',
     alphabet: '',
     initialState: '',
     acceptingStates: '',
   });
-  const [faDataErrors, setFaDataErrors] = useState<Partial<FaFormData>>({});
+  const [nfaDataErrors, setNfaDataErrors] = useState<Partial<NfaFormData>>({});
 
   const onTextFieldChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    setFaFormData((curr) => ({ ...curr, [e.target.id]: e.target.value }));
+    setNfaFormData((curr) => ({ ...curr, [e.target.id]: e.target.value }));
   }, []);
 
   const onFormSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
-      setFaDataErrors({});
+      setNfaDataErrors({});
 
-      const faData = {
-        states: faFormData.states.split(','),
-        alphabet: faFormData.alphabet.split(','),
-        initialState: faFormData.initialState,
-        acceptingStates: faFormData.acceptingStates.split(','),
+      const nfaData = {
+        states: nfaFormData.states.split(','),
+        alphabet: nfaFormData.alphabet.split(','),
+        initialState: nfaFormData.initialState,
+        acceptingStates: nfaFormData.acceptingStates.split(','),
       };
 
-      if (!faData.states.includes(faData.initialState)) {
-        return setFaDataErrors({
+      if (!nfaData.states.includes(nfaData.initialState)) {
+        return setNfaDataErrors({
           initialState: 'Must be one of the provided states',
         });
       }
-      if (!faData.acceptingStates.every((s) => faData.states.includes(s))) {
-        return setFaDataErrors({
+      if (!nfaData.acceptingStates.every((s) => nfaData.states.includes(s))) {
+        return setNfaDataErrors({
           acceptingStates: 'Each must be one of the provided states',
         });
       }
 
-      dispatch(faDataActions.setFaData(faData));
+      dispatch(enfaDataActions.setFaData(nfaData));
       dispatch(routesActions.setRoute(Route.Nfa));
     },
-    [faFormData],
+    [nfaFormData],
   );
 
   return (
@@ -64,7 +64,7 @@ export default function FaForm() {
         >
           <div className="mb-10">
             <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">
-              Enter Finite Automaton Data
+              Enter NFA Data
             </h2>
           </div>
 
@@ -73,45 +73,45 @@ export default function FaForm() {
             id="states"
             label="States"
             title="Unique comma separated state strings (e.g. q1,q2,q3)"
-            value={faFormData.states}
+            value={nfaFormData.states}
             onChange={onTextFieldChange}
             required
             pattern="^(?!,)(?:(?:^|,)([A-Za-z0-9]+)(?!.*\b\1\b))+$"
-            error={faDataErrors.states}
+            error={nfaDataErrors.states}
           />
 
           <TextField
             id="alphabet"
             label="Alphabet (Σ)"
             title="Unique comma separated alphabet characters (e.g. 0,1,c)"
-            value={faFormData.alphabet}
+            value={nfaFormData.alphabet}
             onChange={onTextFieldChange}
             required
             maxLength={9}
             pattern="^(?!,)(?:(?:^|,)([^ ])(?!.*\1))+$"
-            error={faDataErrors.alphabet}
+            error={nfaDataErrors.alphabet}
           />
 
           <TextField
             id="initialState"
             label="Initial State"
             title="State string (e.g. A)"
-            value={faFormData.initialState}
+            value={nfaFormData.initialState}
             onChange={onTextFieldChange}
             required
             pattern="^[A-Za-z0-9]+$"
-            error={faDataErrors.initialState}
+            error={nfaDataErrors.initialState}
           />
 
           <TextField
             id="acceptingStates"
             label="Final States"
             title="Unique comma separated state strings (e.g. q1,q2,q3)"
-            value={faFormData.acceptingStates}
+            value={nfaFormData.acceptingStates}
             onChange={onTextFieldChange}
             required
             pattern="^(?!,)(?:(?:^|,)([A-Za-z0-9]+)(?!.*\b\1\b))+$"
-            error={faDataErrors.acceptingStates}
+            error={nfaDataErrors.acceptingStates}
           />
 
           <div>
