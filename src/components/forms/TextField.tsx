@@ -54,7 +54,7 @@ export default function TextField({
           className={`block w-full border rounded-md shadow-sm appearance-none focus:outline-none sm:text-sm px-3 py-2 ${
             isError
               ? 'text-red-900 placeholder-red-300 border-red-300 focus:ring-red-500 focus:border-red-500'
-              : 'placeholder-gray-400 border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+              : 'placeholder-gray-400 border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
           } ${className}`}
           {...restProps}
         />
