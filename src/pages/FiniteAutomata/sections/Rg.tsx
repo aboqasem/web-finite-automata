@@ -74,19 +74,16 @@ export default function RgSection() {
             {noam.grammar
               .printAscii(noam.fsm.grammar(validEnfaData as Fsm))
               .replaceAll('$', 'Ɛ')
-              .replaceAll(/["<](.)[>"]/g, '$1')
+              .replaceAll(new RegExp(`<(${validEnfaData.states.join('|')})>`, 'g'), '$1')
+              .replaceAll(new RegExp(`"(${validEnfaData.alphabet.join('|')})"`, 'g'), '$1')
               .replaceAll(/->/g, '→')
               .split('\n')
               .splice(1)
               .map((line, i) => {
-                const [variable, states] = line.split('→');
-                const newStates = states
-                  .split(' | ')
-                  .map((state) => state.replace(/ /g, ''))
-                  .reverse()
-                  .join(' | ');
+                const [variable, states] = line.split(' → ');
+                const newStates = states.split(' | ').reverse().join(' | ');
 
-                return <p key={i}>{variable + '→ ' + newStates}</p>;
+                return <p key={i}>{`${variable} → ${newStates}`}</p>;
               })}
           </div>
         </div>
