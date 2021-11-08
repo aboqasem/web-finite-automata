@@ -19,7 +19,7 @@ export default function RgSection() {
                           scope="col"
                           className="px-6 py-3 text-xs font-bold tracking-wider text-center text-gray-500"
                         >
-                          <sup>δ</sup>Min-DFA
+                          <sup>δ</sup>Ɛ-NFA
                         </th>
 
                         {validEnfaData.alphabet.concat('Ɛ').map((char) => (
